@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\82104\Desktop\lionmarket\venv"
+VIRTUAL_ENV="C:\Users\lny02\Documents\Desktop Shortcuts\coding_projects\likelion_SilverMarket\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

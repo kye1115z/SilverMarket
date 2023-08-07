@@ -1,0 +1,16 @@
+<!-- templates/product_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Detail</title>
+</head>
+<body>
+    <h1>Products Detail</h1>
+    <h2>Products Information</h2>
+    <p><strong>Product Name:</strong> {{ product.name }}</p>
+    <p><strong>Category:</strong> {{ product.category }}</p>
+    <p><strong>Weight:</strong> {{ product.weight }}</p>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    <img src="{{ product.photo.url }}" alt="Product Photo" width="200">
+</body>
+</html>
