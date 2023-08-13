@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from config import settings
-from products.views import products_form
+from products.views import products_form, user_products_list
 from django.conf.urls.static import static
 
 
@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('api/products/', include('products.urls')),
     path('form/', products_form, name='products-form'),
+    #path('user-products/', user_products_list, name='user_products_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
