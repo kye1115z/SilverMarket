@@ -6,16 +6,18 @@ from .serializers import ProductSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+from users.models import User
 
 #api 들
 
+@login_required
 @api_view(['POST'])
-@csrf_exempt
 def products_create(request):
+    print("Test")
+    print(str(request))
     serializer = ProductSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(writer = request.user)
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
@@ -31,17 +33,27 @@ def products_detail(request, pk):
 
 @api_view(['GET'])
 def user_products_search(request):
-    user_id = request.GET.get('user_id')
-    if user_id is not None:
-        products = Product.objects.filter(id=user_id)
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data, status=200)
-    else:
+    print(request.GET)
+    userName = request.GET.get('user_id')
+        
+    if userName == "":
         return Response({'message': 'Please provide a user_id parameter.'}, status=400)
+    
+    try:
+        user = User.objects.get(username = userName) 
+    except User.DoesNotExist:
+        return Response({'message': 'User not found'}, status=404)
+    
+    products = Product.objects.filter(writer = user)
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data, status=200)
 
 @login_required
 def user_products_list(request):
     user_id = request.user.id
-    user_products = Product.objects.filter(id=user_id) #특정 유저 id 검색
+    print('현재 user id: ' + str(user_id) )
+    
+    user_products = Product.objects.filter(writer = request.user) #내가 쓴 글만 조회, 만약 특정 유저? -> 그 유저의 id를 request.user 자리에 넣기
+    #print('user products: ' +  str(user_products) )
     return render(request, 'products/user_products_list.html', {'products': user_products})
 

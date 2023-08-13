@@ -77,14 +77,15 @@
         });
 
         searchButton.addEventListener('click', () => {
-            const userIdInput = document.getElementById('user_id');
-            const userId = userIdInput.value;
+            
+            const userId = document.getElementById('user_id').value;
 
             fetch(`/api/user_products_search/?user_id=${userId}`, {
                 method: 'GET'
             })
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 const productList = document.getElementById('productList');
                 productList.innerHTML = data.map(product => `<li>${product.name}</li>`).join('');
             })
