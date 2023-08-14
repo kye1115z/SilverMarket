@@ -46,7 +46,7 @@ def user_products_search(request):
     
     products = Product.objects.filter(writer = user)
     serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data, status=200)
+    return Response(serializer.data, status=200, content_type="application/json")
 
 @login_required
 def user_products_list(request):

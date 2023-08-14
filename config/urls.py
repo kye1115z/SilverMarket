@@ -27,8 +27,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('api/products/', include('products.urls')),
     path('form/', products_form, name='products-form'),
-    #path('',  products_form, name='products-form'),
-    #path('user-products/', user_products_list, name='user_products_list'),
+    path('api/', include('videoapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
