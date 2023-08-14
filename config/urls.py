@@ -18,17 +18,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from config import settings
-from products.views import products_form, user_products_list
-from django.conf.urls.static import static
+import products
 
+from products import views
+
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('api/products/', include('products.urls')),
-    path('form/', products_form, name='products-form'),
+    path('api/products/', products.views.product_list, name='products'),  # 수정된 부분
+    path('', include('products.urls')),
     path('api/', include('videoapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
 
