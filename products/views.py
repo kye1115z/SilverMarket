@@ -36,3 +36,9 @@ def products_by_writer(request, writer_id):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def products_by_category(request, category_id):
+    products = Product.objects.filter(category=category_id)
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
+
