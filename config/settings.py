@@ -38,7 +38,7 @@ LOGIN_URL = '/accounts/login/'
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',
+    'corsheaders', #cors 오류 해결
     'products',
     'rest_framework',
     'django.urls',
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS 설정 - whitelist 에 추가된 주소 접근 허용
+#cors 오류 해결을 위해, 프론트픅의 3000번 포트 등록 및 허용!
 CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000' ,'http://localhost:3000']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False

@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 
+#상품 등록, 불러오기, 유저/카테고리별 조회에 이용되는 기본 products 모델
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     photo = models.ImageField(upload_to='products/')
@@ -15,7 +16,8 @@ class Product(models.Model):
 
     class Meta:
         app_label = 'products'
-        
+
+#상품의 디테일 페이지 출력을 위한 모델
 class Product_details(models.Model):
     id = models.AutoField(primary_key=True)
     category = models.CharField(max_length=50)
