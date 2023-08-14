@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product
+from .models import Product, Product_details
 from .serializers import ProductSerializer
 from django.db.models import Q
+from .models import Product_details
+from .serializers import ProductDetailSerializer
 
 @api_view(['GET', 'POST'])
 def product_list(request):
@@ -42,3 +44,8 @@ def products_by_category(request, category_id):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def product_detail_list(request):
+    product_details = Product_details.objects.all()
+    serializer = ProductDetailSerializer(product_details, many=True)
+    return Response(serializer.data)
