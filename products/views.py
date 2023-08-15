@@ -1,5 +1,6 @@
 from products.models import Product
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -43,5 +44,16 @@ def simple_product_list(request):
     products = Product.objects.all()
     serializer = ProductListSerializer(products, many=True)
     return Response(serializer.data)
+
+#상품 클릭 시 이동하는 디테일 정보 페이지 GET api
+#특정 상품의 상세 뷰를 반환하는 api는 클래스 기반 뷰로 만들었습니당
+class ProductDetailAPIView(APIView):
+    def get(self, request, pk):
+        try:
+            product = Product.objects.get(pk=pk)
+            serializer = ProductDetailSerializer(product)
+            return Response(serializer.data)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
 
 

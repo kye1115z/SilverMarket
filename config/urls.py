@@ -27,7 +27,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('api/products/', products.views.product_list, name='products'),  # 수정된 부분
+    path('api/products/', products.views.product_list, name='products-list'),
+    path('api/products/writer/<str:writer_id>/', views.products_by_writer, name='products-by-writer'),
+    path('api/products/category/<str:category_id>/', views.products_by_category, name='products-by-category'),
+    path('api/products/simple/', views.simple_product_list, name='simple-product-list'),
     path('', include('products.urls')),
     path('api/', include('videoapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

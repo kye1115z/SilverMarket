@@ -9,8 +9,8 @@ class Product(models.Model):
     products_name = models.CharField(max_length=100) #상품명
     price = models.CharField(max_length=100) #상품가격
     category = models.CharField(max_length=50) #상품 카테고리
-    whole_weight = models.FloatField(default=1.0) #상품의 총중량
-    separate_weight = models.FloatField(default=1.0) #개당 중량
+    whole_weight = models.FloatField() #상품의 총중량
+    separate_weight = models.FloatField() #개당 중량
     hometown = models.CharField(max_length=100) #원산지
     organize = models.CharField(max_length=100) #구성
     
