@@ -1,13 +1,14 @@
+from products.models import Product
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework import status
-from .models import Product, Product_details
 from .serializers import ProductSerializer
-from django.db.models import Q
-from .models import Product_details
-from .serializers import ProductDetailSerializer
+from .serializers import ProductListSerializer, ProductDetailSerializer
 
-#상품 등록(POST), 등록돈 상품 전체 조회(GET) api
+
+#상품 정보 등록(POST), 등록된 상품 전체 조회(GET) api -> 상품의 상세 정보를 post하고, 모든 상품 리스트의 상세 정보를 get
 @api_view(['GET', 'POST'])
 def product_list(request):
     if request.method == 'GET':
@@ -36,9 +37,11 @@ def products_by_category(request, category_id):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
-#상품 디테일 페이지 GET api
+#상품 사진, 상품명, 가격만을 반환하는 홈화면을 위한 GET api
 @api_view(['GET'])
-def product_detail_list(request):
-    product_details = Product_details.objects.all()
-    serializer = ProductDetailSerializer(product_details, many=True)
+def simple_product_list(request):
+    products = Product.objects.all()
+    serializer = ProductListSerializer(products, many=True)
     return Response(serializer.data)
+
+
