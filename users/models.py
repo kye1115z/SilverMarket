@@ -26,8 +26,10 @@ class UserManager(DjangoUserManager):
     
 class User(AbstractUser):
     phone = models.CharField(verbose_name = '전화번호', max_length=11)
+    address = models.TextField(verbose_name = '주소',null = True) 
     objects = UserManager()
 
 #class UserInfo(models.Model):
 #    phone_sub = models.CharField(verbose_name = '보조 전화번호', max_length=11)
 #    user = models.ForeignKey(to ='User', on_delete=models.CASCADE)
+
