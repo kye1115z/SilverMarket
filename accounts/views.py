@@ -23,8 +23,9 @@ class Login(APIView):
         else:
             return Response({"detail": "계정이 존재하지 않습니다!"}, status=status.HTTP_401_UNAUTHORIZED)
         
-#회원가입 POST api
 class Register(APIView):
+    
+    #회원가입 POST api
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -41,6 +42,34 @@ class Register(APIView):
         User.objects.create_user(username=username, password=password, email = email, phone = phone, address = address)
         
         return Response({"detail": "회원가입이 성공적으로 완료되었습니다!"}, status=status.HTTP_201_CREATED)
+    
+    #회원 정보 받아오기 GET api (마이페이지 용도)
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            user_data = {
+                "username": user.username,
+                "email": user.email,
+                "phone": user.phone,
+                "address": user.address,
+            }
+            return Response(user_data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"detail": "해당 사용자를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+        
+    #회원 정보 수정하기 PUT api
+    def put(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            user.email = request.data.get("email", user.email)
+            user.phone = request.data.get("phone", user.phone)
+            user.address = request.data.get("address", user.address)
+            user.save()
+            return Response({"detail": "회원정보가 업데이트되었습니다!"}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"detail": "해당 사용자를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+    
+    
 
 #로그아웃 POST api
 class Logout(APIView):
